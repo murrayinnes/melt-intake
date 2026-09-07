@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MELT Method — Client History & Health Questionnaire</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #1c1c1c;
+    background: #fff;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 64px 80px;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .logo-svg { width: 52px; }
+
+  .logo-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #1a3a6b;
+    line-height: 1.3;
+    writing-mode: horizontal-tb;
+  }
+
+  .form-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: #1c1c1c;
+    margin-bottom: 12px;
+  }
+
+  .form-intro {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #666;
+    text-align: center;
+    max-width: 560px;
+    line-height: 1.75;
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #1c1c1c;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 18px;
+  }
+
+  .divider { border: none; border-top: 1px solid #ebebeb; margin: 32px 0; }
+
+  /* ── Grids ── */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px 24px; }
+  .g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px 24px; }
+  .gap { height: 14px; }
+
+  /* ── Fields ── */
+  .field { display: flex; flex-direction: column; }
+
+  .field label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 5px;
+  }
+
+  .field input,
+  .field textarea {
+    border: none;
+    border-bottom: 1px solid #d0d0d0;
+    padding: 5px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #1c1c1c;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.15s;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .field input:focus, .field textarea:focus { border-bottom-color: #1a3a6b; }
+  .field textarea { resize: none; padding-top: 5px; line-height: 1.65; min-height: 54px; }
+  .field textarea.tall { min-height: 78px; }
+
+  /* ── Radio ── */
+  .sublabel {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #999; display: block; margin-bottom: 8px;
+  }
+  .radio-row { display: flex; gap: 24px; }
+  .radio-row label {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 13.5px; font-weight: 300; color: #1c1c1c; cursor: pointer;
+  }
+  .radio-row input[type="radio"] { accent-color: #1a3a6b; width: 14px; height: 14px; }
+
+  /* ── Scale buttons ── */
+  .scale-wrap { }
+  .scale-btns { display: flex; gap: 4px; margin-top: 4px; }
+  .scale-btns button {
+    width: 30px; height: 28px; border: 1px solid #ddd; background: none;
+    font-size: 11.5px; font-family: 'Inter', sans-serif; color: #666;
+    cursor: pointer; transition: all 0.12s; border-radius: 2px;
+  }
+  .scale-btns button:hover { border-color: #1a3a6b; color: #1a3a6b; }
+  .scale-btns button.on { background: #1a3a6b; border-color: #1a3a6b; color: #fff; }
+
+  /* ── Checklists ── */
+  .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+  .checklist.c3 { grid-template-columns: 1fr 1fr 1fr; }
+  .checklist.c1col { grid-template-columns: 1fr; gap: 3px; }
+
+  .ck {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 300; color: #333;
+    cursor: pointer; padding: 3px 0; user-select: none;
+  }
+  .ck input[type="checkbox"] { accent-color: #1a3a6b; width: 13px; height: 13px; flex-shrink: 0; }
+
+  /* ── Consent ── */
+  .consent-block {
+    font-family: 'EB Garamond', serif;
+    font-size: 15px;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 10px;
+  }
+  .consent-block strong { font-weight: 600; color: #1c1c1c; }
+
+  .initials-row {
+    display: flex; align-items: baseline; gap: 10px; margin: 8px 0 22px;
+  }
+  .initials-row span {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #999; white-space: nowrap;
+  }
+  .initials-row input {
+    width: 70px; border: none; border-bottom: 1px solid #d0d0d0;
+    padding: 3px 0; font-family: 'Inter', sans-serif; font-size: 14px;
+    background: transparent; outline: none; text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .initials-row input:focus { border-bottom-color: #1a3a6b; }
+
+  .sig-row { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-top: 22px; }
+
+  /* ── Submit ── */
+  .submit-area {
+    margin-top: 44px; padding-top: 32px;
+    border-top: 1px solid #e0e0e0;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .submit-btn {
+    background: #1a3a6b; color: #fff; border: none;
+    padding: 13px 52px; font-family: 'Inter', sans-serif;
+    font-size: 11.5px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer; border-radius: 2px;
+    transition: background 0.15s;
+  }
+  .submit-btn:hover { background: #122d55; }
+  .submit-btn:disabled { background: #aaa; cursor: default; }
+
+  .err {
+    display: none; color: #b33; font-size: 13px;
+    background: #fff5f5; border: 1px solid #f0c0c0;
+    padding: 10px 16px; border-radius: 2px;
+  }
+
+  /* ── Success ── */
+  #success {
+    display: none; text-align: center; padding: 100px 0;
+  }
+  #success h2 {
+    font-family: 'EB Garamond', serif; font-size: 32px;
+    font-weight: 400; color: #1c1c1c; margin-bottom: 12px;
+  }
+  #success p { color: #888; font-size: 14px; }
+
+  @media (max-width: 580px) {
+    .page { padding: 36px 24px 60px; }
+    .g2, .g3, .g4 { grid-template-columns: 1fr; }
+    .checklist, .checklist.c3 { grid-template-columns: 1fr; }
+    .sig-row { grid-template-columns: 1fr; }
+    .logo-wrap { flex-direction: column; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Logo + Title ── -->
+  <div class="header">
+    <div class="logo-wrap">
+      <!-- MELT Method logo: light blue arc (top) + dark navy teardrop (bottom) -->
+      <svg class="logo-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#9bbfe0;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#4a80bb;stop-opacity:1"/>
+          </linearGradient>
+          <linearGradient id="dropGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#3a6aaa;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#0f2a5e;stop-opacity:1"/>
+          </linearGradient>
+        </defs>
+        <!-- Light blue crescent arc (top-left) -->
+        <path d="M 20,10
+                 C 20,10 110,10 110,80
+                 C 110,130 75,145 60,148
+                 C 80,130 90,105 75,75
+                 C 62,48 30,42 20,10 Z"
+              fill="url(#arcGrad)"/>
+        <!-- Dark navy teardrop (bottom) -->
+        <path d="M 60,148
+                 C 60,148 100,140 95,105
+                 C 92,85 75,75 75,75
+                 C 90,105 80,130 60,148 Z
+                 M 75,75
+                 C 62,48 30,42 20,10
+                 C 30,42 50,68 60,100
+                 C 65,118 64,135 60,148
+                 C 80,130 90,105 75,75 Z"
+              fill="url(#dropGrad)"/>
+        <!-- Simpler accurate shapes -->
+      </svg>
+
+      <!-- Rebuilt accurate logo -->
+      <svg class="logo-svg" viewBox="0 0 100 175" xmlns="http://www.w3.org/2000/svg" style="display:none">
+      </svg>
+
+      <div class="logo-text">MELT<br>METHOD</div>
+    </div>
+    <div class="form-title">Client History and Health Questionnaire</div>
+    <p class="form-intro">Please fill out this form as fully, accurately, and honestly as possible prior to our session. Small details are just as important as major issues in assessing body systems. Mental, emotional, and social aspects of your life all play a role in your overall health.</p>
+  </div>
+
+  <div id="form-body">
+
+    <!-- ── 1. Client Information ── -->
+    <div class="section">
+      <div class="section-title">Client Information</div>
+      <div class="g2">
+        <div class="field"><label>Full Name</label><input type="text" id="name"></div>
+        <div class="field"><label>Date of First Visit</label><input type="date" id="visitDate"></div>
+      </div>
+      <div class="gap"></div>
+      <div class="field"><label>Address</label><input type="text" id="address"></div>
+      <div class="gap" style="height:10px"></div>
+      <div class="g3">
+        <div class="field"><label>Phone Number</label><input type="tel" id="phone"></div>
+        <div class="field"><label>Email</label><input type="email" id="email"></div>
+        <div class="field"><label>Date of Birth</label><input type="date" id="dob"></div>
+      </div>
+      <div class="gap" style="height:10px"></div>
+      <div class="g4">
+        <div class="field"><label>Age</label><input type="number" id="age" min="0" max="120"></div>
+        <div class="field"><label>Weight</label><input type="text" id="weight"></div>
+        <div class="field"><label>Height</label><input type="text" id="height"></div>
+        <div class="field"><label>Marital Status</label><input type="text" id="marital"></div>
+      </div>
+      <div class="gap" style="height:10px"></div>
+      <div class="g2">
+        <div class="field"><label>Number of Children &amp; Ages</label><input type="text" id="children"></div>
+        <div class="field"><label>Occupation</label><input type="text" id="occupation"></div>
+      </div>
+      <div class="gap" style="height:10px"></div>
+      <span class="sublabel">Handedness</span>
+      <div class="radio-row">
+        <label><input type="radio" name="handedness" value="Right handed"> Right handed</label>
+        <label><input type="radio" name="handedness" value="Left handed"> Left handed</label>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── 2. General Health History ── -->
+    <div class="section">
+      <div class="section-title">General Health History</div>
+
+      <div class="field" style="margin-bottom:14px">
+        <label>List any pain or dysfunction present today — most to least important, with approximate date of onset</label>
+        <textarea id="painList" class="tall" placeholder="1.&#10;2.&#10;3."></textarea>
+      </div>
+      <div class="field" style="margin-bottom:14px">
+        <label>Have you seen a GP or specialist for any of these problems?</label>
+        <textarea id="gpVisit"></textarea>
+      </div>
+      <div class="field" style="margin-bottom:14px">
+        <label>Was there any treatment or diagnosis given? If yes, what was it?</label>
+        <textarea id="diagnosis"></textarea>
+      </div>
+      <div class="field" style="margin-bottom:20px">
+        <label>Has the condition changed with treatment?</label>
+        <textarea id="conditionChange"></textarea>
+      </div>
+
+      <div class="g2" style="margin-bottom:20px">
+        <div class="scale-wrap">
+          <span class="sublabel">Commitment to health goals (1 = low, 10 = high)</span>
+          <div class="scale-btns" id="sc-commit">
+            <button type="button" onclick="setScale('sc-commit',1,this)">1</button>
+            <button type="button" onclick="setScale('sc-commit',2,this)">2</button>
+            <button type="button" onclick="setScale('sc-commit',3,this)">3</button>
+            <button type="button" onclick="setScale('sc-commit',4,this)">4</button>
+            <button type="button" onclick="setScale('sc-commit',5,this)">5</button>
+            <button type="button" onclick="setScale('sc-commit',6,this)">6</button>
+            <button type="button" onclick="setScale('sc-commit',7,this)">7</button>
+            <button type="button" onclick="setScale('sc-commit',8,this)">8</button>
+            <button type="button" onclick="setScale('sc-commit',9,this)">9</button>
+            <button type="button" onclick="setScale('sc-commit',10,this)">10</button>
+          </div>
+        </div>
+        <div class="scale-wrap">
+          <span class="sublabel">General energy level (1 = low, 10 = high)</span>
+          <div class="scale-btns" id="sc-energy">
+            <button type="button" onclick="setScale('sc-energy',1,this)">1</button>
+            <button type="button" onclick="setScale('sc-energy',2,this)">2</button>
+            <button type="button" onclick="setScale('sc-energy',3,this)">3</button>
+            <button type="button" onclick="setScale('sc-energy',4,this)">4</button>
+            <button type="button" onclick="setScale('sc-energy',5,this)">5</button>
+            <button type="button" onclick="setScale('sc-energy',6,this)">6</button>
+            <button type="button" onclick="setScale('sc-energy',7,this)">7</button>
+            <button type="button" onclick="setScale('sc-energy',8,this)">8</button>
+            <button type="button" onclick="setScale('sc-energy',9,this)">9</button>
+            <button type="button" onclick="setScale('sc-energy',10,this)">10</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:14px">
+        <label>Please list all medications you are currently taking</label>
+        <textarea id="medications" class="tall"></textarea>
+      </div>
+      <div class="field">
+        <label>Are you experiencing any side effects?</label>
+        <textarea id="sideEffects"></textarea>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── 3. General Questions ── -->
+    <div class="section">
+      <div class="section-title">General Questions</div>
+
+      <div class="g3" style="margin-bottom:14px">
+        <div class="field"><label>Average hours of sleep per night</label><input type="text" id="sleepHours"></div>
+        <div class="field"><label>Water per day</label><input type="text" id="water"></div>
+        <div class="field"><label>Meals per day (average)</label><input type="text" id="meals"></div>
+      </div>
+      <div class="field" style="margin-bottom:14px">
+        <label>Do you exercise regularly? If yes, what type(s)?</label>
+        <input type="text" id="exercise">
+      </div>
+      <div class="field" style="margin-bottom:18px">
+        <label>Smoking / alcohol / coffee — if any, please note frequency</label>
+        <input type="text" id="habitFrequency">
+      </div>
+
+      <span class="sublabel" style="margin-bottom:10px">Check all that apply</span>
+      <div class="checklist c3" style="margin-bottom:20px">
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Difficulty falling/staying asleep"> Difficulty falling/staying asleep</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Depression or anxiety"> Depression or anxiety</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Wakes at night for bathroom"> Wakes at night for bathroom</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Can fall back asleep easily"> Can fall back asleep easily</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Extreme stress / pressure daily"> Extreme stress / pressure daily</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Currently smokes"> Currently smokes</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks alcohol"> Drinks alcohol</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks coffee"> Drinks coffee</label>
+      </div>
+
+      <div class="field" style="margin-bottom:14px">
+        <label>Have you ever been diagnosed with cancer? If yes, what type?</label>
+        <textarea id="cancer"></textarea>
+      </div>
+      <div class="field">
+        <label>Please list any surgeries (major or minor) you have undergone</label>
+        <textarea id="surgeries" class="tall"></textarea>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── 4. Medical History ── -->
+    <div class="section">
+      <div class="section-title">Medical History — Check All That Apply</div>
+
+      <span class="sublabel" style="margin-bottom:8px">General</span>
+      <div class="checklist" style="margin-bottom:20px">
+        <label class="ck"><input type="checkbox" name="gen" value="Hospitalization"> Hospitalization</label>
+        <label class="ck"><input type="checkbox" name="gen" value="Scarring"> Scarring</label>
+        <label class="ck"><input type="checkbox" name="gen" value="Car accident"> Car accident</label>
+        <label class="ck"><input type="checkbox" name="gen" value="Excessive hair loss"> Excessive hair loss</label>
+        <label class="ck"><input type="checkbox" name="gen" value="Broken bones"> Broken bones</label>
+        <label class="ck"><input type="checkbox" name="gen" value="Sudden tiredness / weakness"> Sudden tiredness / weakness</label>
+        <label class="ck"><input type="checkbox" name="gen" value="Sprains or dislocation"> Sprains or dislocation</label>
+        <label class="ck"><input type="checkbox" name="gen" value="Fever / chills (unknown reasons)"> Fever / chills (unknown reasons)</label>
+      </div>
+
+      <span class="sublabel" style="margin-bottom:8px">Musculoskeletal System</span>
+      <div class="checklist" style="margin-bottom:20px">
+        <label class="ck"><input type="checkbox" name="musculo" value="Low back pain"> Low back pain</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Joint pain or dysfunction"> Joint pain or dysfunction</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Mid-back pain"> Mid-back pain</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Muscular pain or dysfunction"> Muscular pain or dysfunction</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Neck pain"> Neck pain</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Arthritis"> Arthritis</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Arm problems"> Arm problems</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Difficulty walking"> Difficulty walking</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Leg problems"> Leg problems</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Broken bones"> Broken bones</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Numbness / tingling"> Numbness / tingling</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Torn muscles"> Torn muscles</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Fainting"> Fainting</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Ligament sprains"> Ligament sprains</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Frequent muscle twitching / tics / spasms"> Frequent muscle twitching / tics / spasms</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Muscle strains"> Muscle strains</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Loss of coordination"> Loss of coordination</label>
+        <label class="ck"><input type="checkbox" name="musculo" value="Cartilage dysfunction or tears"> Cartilage dysfunction or tears</label>
+      </div>
+
+      <div class="g2" style="gap:32px; margin-bottom:20px">
+        <div>
+          <span class="sublabel" style="margin-bottom:8px">Nervous System</span>
+          <div class="checklist c1col">
+            <label class="ck"><input type="checkbox" name="nervous" value="Dizziness or vertigo"> Dizziness or vertigo</label>
+            <label class="ck"><input type="checkbox" name="nervous" value="Frequent headaches or migraines"> Frequent headaches or migraines</label>
+            <label class="ck"><input type="checkbox" name="nervous" value="Loss of balance"> Loss of balance</label>
+          </div>
+        </div>
+        <div>
+          <span class="sublabel" style="margin-bottom:8px">Nose &amp; Sinuses</span>
+          <div class="checklist c1col">
+            <label class="ck"><input type="checkbox" name="nose" value="Sinus infections"> Sinus infections</label>
+            <label class="ck"><input type="checkbox" name="nose" value="Allergies"> Allergies</label>
+            <label class="ck"><input type="checkbox" name="nose" value="Difficulty breathing"> Difficulty breathing</label>
+            <label class="ck"><input type="checkbox" name="nose" value="Nose surgery or reconstruction"> Nose surgery or reconstruction</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="g2" style="gap:32px; margin-bottom:20px">
+        <div>
+          <span class="sublabel" style="margin-bottom:8px">Mouth, Throat &amp; Neck</span>
+          <div class="checklist c1col">
+            <label class="ck"><input type="checkbox" name="mouth" value="Frequent sore throats"> Frequent sore throats</label>
+            <label class="ck"><input type="checkbox" name="mouth" value="Gum problems"> Gum problems</label>
+            <label class="ck"><input type="checkbox" name="mouth" value="Grinding / TMJ / clicking jaw"> Grinding / TMJ / clicking jaw</label>
+            <label class="ck"><input type="checkbox" name="mouth" value="Dental crowns / bridges / mouth work"> Dental crowns / bridges / mouth work</label>
+            <label class="ck"><input type="checkbox" name="mouth" value="Gland swelling"> Gland swelling</label>
+            <label class="ck"><input type="checkbox" name="mouth" value="Braces (current or past)"> Braces (current or past)</label>
+          </div>
+        </div>
+        <div>
+          <span class="sublabel" style="margin-bottom:8px">Respiratory System</span>
+          <div class="checklist c1col">
+            <label class="ck"><input type="checkbox" name="resp" value="Asthma"> Asthma</label>
+            <label class="ck"><input type="checkbox" name="resp" value="Chronic coughing"> Chronic coughing</label>
+            <label class="ck"><input type="checkbox" name="resp" value="Pain while breathing"> Pain while breathing</label>
+            <label class="ck"><input type="checkbox" name="resp" value="Shortness of breath"> Shortness of breath</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="g2" style="gap:32px; margin-bottom:20px">
+        <div>
+          <span class="sublabel" style="margin-bottom:8px">Cardiovascular &amp; Peripheral Vascular</span>
+          <div class="checklist c1col">
+            <label class="ck"><input type="checkbox" name="cardio" value="High blood pressure"> High blood pressure</label>
+            <label class="ck"><input type="checkbox" name="cardio" value="Heart murmurs"> Heart murmurs</label>
+            <label class="ck"><input type="checkbox" name="cardio" value="Heart palpitations"> Heart palpitations</label>
+            <label class="ck"><input type="checkbox" name="cardio" value="Irregular heartbeat"> Irregular heartbeat</label>
+            <label class="ck"><input type="checkbox" name="cardio" value="Varicose veins"> Varicose veins</label>
+          </div>
+        </div>
+        <div>
+          <span class="sublabel" style="margin-bottom:8px">Gastrointestinal System</span>
+          <div class="checklist c1col">
+            <label class="ck"><input type="checkbox" name="gastro" value="Frequent constipation"> Frequent constipation</label>
+            <label class="ck"><input type="checkbox" name="gastro" value="Frequent diarrhea"> Frequent diarrhea</label>
+            <label class="ck"><input type="checkbox" name="gastro" value="Abdominal pain"> Abdominal pain</label>
+            <label class="ck"><input type="checkbox" name="gastro" value="Colitis / Crohn's / ulcers"> Colitis / Crohn's / ulcers</label>
+            <label class="ck"><input type="checkbox" name="gastro" value="Frequent nausea / vomiting"> Frequent nausea / vomiting</label>
+            <label class="ck"><input type="checkbox" name="gastro" value="Frequent heartburn"> Frequent heartburn</label>
+            <label class="ck"><input type="checkbox" name="gastro" value="Frequent indigestion or gas"> Frequent indigestion or gas</label>
+            <label class="ck"><input type="checkbox" name="gastro" value="Frequent cramps"> Frequent cramps</label>
+          </div>
+        </div>
+      </div>
+
+      <span class="sublabel" style="margin-bottom:8px">Reproductive System</span>
+      <div class="checklist" style="margin-bottom:0">
+        <label class="ck"><input type="checkbox" name="repro" value="Prostate issues or enlargements"> Prostate issues or enlargements</label>
+        <label class="ck"><input type="checkbox" name="repro" value="Fibroids, cysts, or endometriosis"> Fibroids, cysts, or endometriosis</label>
+        <label class="ck"><input type="checkbox" name="repro" value="Frequent cramping"> Frequent cramping</label>
+        <label class="ck"><input type="checkbox" name="repro" value="Heavy flow during period"> Heavy flow during period</label>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── 5. Release of Liability ── -->
+    <div class="section">
+      <div class="section-title">Release of Liability</div>
+
+      <p class="consent-block">If necessary, I allow <strong>Holly Bonnel</strong> to discuss with my health care provider or physical therapist the appropriateness of MELT training for my general health and wellness and I understand that MELT is not a replacement for medical treatment or medical diagnosis. I release <strong>Holly Bonnel</strong> from any kind of claim or injury resulting from any act or omission during MELT practice or treatment.</p>
+
+      <div class="field" style="max-width:380px; margin: 16px 0 24px">
+        <label>Full Name — I, _________________, being aware of my own health and physical condition:</label>
+        <input type="text" id="sigName">
+      </div>
+
+      <p class="consent-block"><strong>1)</strong> certify that I have been informed of and understand that any exercise and/or fitness activities involve a risk of injury, and that I am voluntarily participating in these activities with understanding and appreciation of the risks involved. I hereby agree to expressly assume and accept any and all risks of injury regardless of severity.</p>
+      <div class="initials-row"><span>Initials</span><input type="text" id="initials1" maxlength="5"></div>
+
+      <p class="consent-block"><strong>2)</strong> understand that all information and services provided by <strong>Holly Bonnel</strong> are of a general nature and are provided for educational purposes only. None of the information or services provided by <strong>Holly Bonnel</strong> are to be taken as medical or other health advice pertaining to any specific health or medical condition that I have or may have had. The information and services provided by <strong>Holly Bonnel</strong> are not a diagnosis, treatment plan or recommendation for a particular course of action regarding my health and are not intended to provide specific medical advice.</p>
+      <div class="initials-row"><span>Initials</span><input type="text" id="initials2" maxlength="5"></div>
+
+      <p class="consent-block"><strong>3)</strong> understand that I am learning MELT techniques for my own self-care and I cannot teach any MELT techniques to any other group or population in a class setting until appropriately trained and licensed by Longevity Fitness. I understand that there are potential legal consequences for teaching this material directly or by teaching the techniques and calling it by another name.</p>
+      <div class="initials-row"><span>Initials</span><input type="text" id="initials3" maxlength="5"></div>
+
+      <div class="sig-row">
+        <div class="field"><label>Client Signature — type full name</label><input type="text" id="sigFull"></div>
+        <div class="field"><label>Date</label><input type="date" id="sigDate"></div>
+      </div>
+    </div>
+
+    <div class="err" id="errBanner">Something went wrong — please try again.</div>
+
+    <div class="submit-area">
+      <button class="submit-btn" id="submitBtn" onclick="submitForm()">Submit Form</button>
+    </div>
+
+  </div><!-- /form-body -->
+
+  <div id="success">
+    <h2>Thank you.</h2>
+    <p>Your form has been received.<br>Holly Bonnel will be in touch before your session.</p>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+// ── Replace this with your deployed Google Apps Script URL ──
+const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+const scales = {};
+
+function setScale(id, val, btn) {
+  scales[id] = val;
+  document.querySelectorAll('#' + id + ' button').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function v(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function checked(name) {
+  return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked'))
+    .map(i => i.value).join(', ') || 'None';
+}
+
+function radio(name) {
+  const el = document.querySelector('input[name="' + name + '"]:checked');
+  return el ? el.value : '';
+}
+
+async function submitForm() {
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Submitting…';
+  btn.disabled = true;
+  document.getElementById('errBanner').style.display = 'none';
+
+  const data = {
+    // Client info
+    visitDate: v('visitDate'), name: v('name'), address: v('address'),
+    phone: v('phone'), email: v('email'), dob: v('dob'), age: v('age'),
+    marital: v('marital'), weight: v('weight'), height: v('height'),
+    children: v('children'), occupation: v('occupation'),
+    handedness: radio('handedness'),
+    // Health history
+    painList: v('painList'), gpVisit: v('gpVisit'),
+    diagnosis: v('diagnosis'), conditionChange: v('conditionChange'),
+    commitmentScale: scales['sc-commit'] || '',
+    energyScale: scales['sc-energy'] || '',
+    medications: v('medications'), sideEffects: v('sideEffects'),
+    // General questions
+    sleepHours: v('sleepHours'), water: v('water'), meals: v('meals'),
+    exercise: v('exercise'), habitFrequency: v('habitFrequency'),
+    lifestyle: checked('lifestyle'),
+    cancer: v('cancer'), surgeries: v('surgeries'),
+    // Medical history
+    gen: checked('gen'), musculo: checked('musculo'),
+    nervous: checked('nervous'), nose: checked('nose'),
+    mouth: checked('mouth'), resp: checked('resp'),
+    cardio: checked('cardio'), gastro: checked('gastro'),
+    repro: checked('repro'),
+    // Liability
+    sigName: v('sigName'), initials1: v('initials1'),
+    initials2: v('initials2'), initials3: v('initials3'),
+    sigFull: v('sigFull'), sigDate: v('sigDate'),
+  };
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    document.getElementById('form-body').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (err) {
+    document.getElementById('errBanner').style.display = 'block';
+    btn.textContent = 'Submit Form';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
