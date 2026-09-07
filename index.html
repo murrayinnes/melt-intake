@@ -424,7 +424,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 // ── Interest form submission ───────────────────────────
 // Replace this URL with your Google Apps Script URL (same one as the intake form,
 // or a separate one — the script can handle both via a 'type' field)
-const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+const SCRIPT_URL = 'https://formspree.io/f/mqpkyyyq';
 
 async function submitInterest() {
   const name  = document.getElementById('reg-name').value.trim();
@@ -436,12 +436,12 @@ async function submitInterest() {
   btn.disabled = true;
 
   try {
-    await fetch(SCRIPT_URL, {
+    const res = await fetch(SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: 'interest', name, email })
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email })
     });
+    if (!res.ok) throw new Error('Failed');
     document.getElementById('modal-form-content').style.display = 'none';
     document.getElementById('modal-success').style.display = 'block';
   } catch {
