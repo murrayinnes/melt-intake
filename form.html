@@ -371,7 +371,7 @@
       </div>
 
       <div class="field" style="margin-bottom:14px">
-        <label>Please list all medications you are currently taking:</label>
+        <label>Please list all medications you are currently taking</label>
         <textarea id="medications" class="tall"></textarea>
       </div>
       <div class="field">
@@ -385,18 +385,6 @@
     <!-- ── 3. General Questions ── -->
     <div class="section">
       <div class="section-title">General Questions</div>
-
-      <span class="sublabel" style="margin-bottom:10px">Check all that apply</span>
-      <div class="checklist c3" style="margin-bottom:20px">
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Difficulty falling/staying asleep"> Difficulty falling/staying asleep</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Depression or anxiety"> Depression or anxiety</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Wakes at night for bathroom"> Wakes at night for bathroom</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Can fall back asleep easily"> Can fall back asleep easily</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Extreme stress / pressure daily"> Extreme stress / pressure daily</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Currently smokes"> Currently smokes</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks alcohol"> Drinks alcohol</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks coffee"> Drinks coffee</label>
-      </div>
 
       <div class="g3" style="margin-bottom:14px">
         <div class="field"><label>Average hours of sleep per night</label><input type="text" id="sleepHours"></div>
@@ -412,12 +400,24 @@
         <input type="text" id="habitFrequency">
       </div>
 
+      <span class="sublabel" style="margin-bottom:10px">Check all that apply</span>
+      <div class="checklist c3" style="margin-bottom:20px">
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Difficulty falling/staying asleep"> Difficulty falling/staying asleep</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Depression or anxiety"> Depression or anxiety</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Wakes at night for bathroom"> Wakes at night for bathroom</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Can fall back asleep easily"> Can fall back asleep easily</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Extreme stress / pressure daily"> Extreme stress / pressure daily</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Currently smokes"> Currently smokes</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks alcohol"> Drinks alcohol</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks coffee"> Drinks coffee</label>
+      </div>
+
       <div class="field" style="margin-bottom:14px">
         <label>Have you ever been diagnosed with cancer? If yes, what type?</label>
         <textarea id="cancer"></textarea>
       </div>
       <div class="field">
-        <label>Please list any surgeries (major or minor) you have undergone:</label>
+        <label>Please list any surgeries (major or minor) you have undergone</label>
         <textarea id="surgeries" class="tall"></textarea>
       </div>
     </div>
@@ -548,9 +548,10 @@
 
       <p class="consent-block">If necessary, I allow <strong>Holly Bonnel</strong> to discuss with my health care provider or physical therapist the appropriateness of MELT training for my general health and wellness and I understand that MELT is not a replacement for medical treatment or medical diagnosis. I release <strong>Holly Bonnel</strong> from any kind of claim or injury resulting from any act or omission during MELT practice or treatment.</p>
 
-      <p class="consent-block" style="margin: 16px 0 24px">
-        I,&nbsp;<input type="text" id="sigName" title="Enter your full name here" placeholder="your full name" style="border:none; border-bottom:1px solid #ccc; background:transparent; font-family:inherit; font-size:inherit; font-style:inherit; color:inherit; outline:none; width:220px; padding:0 2px; cursor:text;">&nbsp;, being aware of my own health and physical condition:
-      </p>
+      <div class="field" style="max-width:380px; margin: 16px 0 24px">
+        <label>Full Name — I, _________________, being aware of my own health and physical condition:</label>
+        <input type="text" id="sigName">
+      </div>
 
       <p class="consent-block"><strong>1)</strong> certify that I have been informed of and understand that any exercise and/or fitness activities involve a risk of injury, and that I am voluntarily participating in these activities with understanding and appreciation of the risks involved. I hereby agree to expressly assume and accept any and all risks of injury regardless of severity.</p>
       <div class="initials-row"><span>Initials</span><input type="text" id="initials1" maxlength="5"></div>
@@ -564,26 +565,45 @@
       <div class="sig-row">
         <div class="field">
           <label>Client Signature</label>
-          <div style="display:flex; align-items:center; gap:14px; margin-top:4px">
-            <canvas id="sigPreview" width="260" height="48" style="border-bottom:1px solid #ccc; cursor:pointer; display:block;" onclick="openSigPad()" title="Click to sign"></canvas>
-            <button type="button" onclick="openSigPad()" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:400; letter-spacing:0.08em; color:#888; background:none; border:none; cursor:pointer; white-space:nowrap; padding:0; text-decoration:underline;">Sign here</button>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:6px;">
+            <canvas id="sigPreview" width="260" height="48"
+              style="border-bottom:1px solid #ccc;cursor:pointer;display:block;background:#fff;"
+              onclick="openSigPad()" title="Click to sign"></canvas>
+            <button type="button" onclick="openSigPad()"
+              style="font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;
+                     color:#888;background:none;border:none;cursor:pointer;padding:0;text-decoration:underline;">
+              Sign here
+            </button>
           </div>
           <input type="hidden" id="sigFull">
         </div>
         <div class="field"><label>Date</label><input type="text" id="sigDate" placeholder="DD/MM/YYYY"></div>
       </div>
 
-      <!-- Signature pad modal -->
-      <div id="sigModal" style="display:none; position:fixed; inset:0; background:rgba(14,34,64,0.55); backdrop-filter:blur(4px); z-index:300; align-items:center; justify-content:center; padding:24px;">
-        <div style="background:#fff; width:100%; max-width:540px; padding:36px 36px 28px; position:relative;">
-          <p style="font-family:'EB Garamond',serif; font-size:20px; font-weight:400; color:#0e2240; margin-bottom:6px;">Sign here</p>
-          <p style="font-size:12px; color:#aaa; margin-bottom:18px; font-family:'Inter',sans-serif;">Draw your signature using your mouse, trackpad, or finger.</p>
-          <canvas id="sigCanvas" width="468" height="160" style="display:block; width:100%; border:1px solid #e0e0e0; border-radius:1px; cursor:crosshair; touch-action:none; background:#fff;"></canvas>
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
-            <button type="button" onclick="clearSig()" style="font-family:'Inter',sans-serif; font-size:11px; letter-spacing:0.08em; color:#aaa; background:none; border:none; cursor:pointer; text-decoration:underline; padding:0;">Clear</button>
-            <div style="display:flex; gap:12px;">
-              <button type="button" onclick="closeSigPad()" style="font-family:'Inter',sans-serif; font-size:12px; letter-spacing:0.08em; color:#666; background:none; border:1px solid #ddd; padding:10px 24px; cursor:pointer; border-radius:1px;">Cancel</button>
-              <button type="button" onclick="acceptSig()" style="font-family:'Inter',sans-serif; font-size:12px; letter-spacing:0.08em; color:#fff; background:#0e2240; border:none; padding:10px 24px; cursor:pointer; border-radius:1px;">Accept</button>
+      <!-- ── Signature modal ── -->
+      <div id="sigModal"
+        style="display:none;position:fixed;inset:0;background:rgba(14,34,64,0.6);
+               backdrop-filter:blur(4px);z-index:9999;align-items:center;
+               justify-content:center;padding:24px;">
+        <div style="background:#fff;width:100%;max-width:540px;padding:36px 36px 28px;position:relative;">
+          <p style="font-family:'EB Garamond',serif;font-size:20px;color:#0e2240;margin-bottom:6px;">Sign here</p>
+          <p style="font-size:12px;color:#aaa;margin-bottom:18px;font-family:'Inter',sans-serif;">
+            Draw your signature using your mouse, trackpad, or finger.
+          </p>
+          <canvas id="sigCanvas"
+            style="display:block;width:100%;height:160px;border:1px solid #e0e0e0;
+                   cursor:crosshair;touch-action:none;background:#fff;"></canvas>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">
+            <button type="button" onclick="clearSig()"
+              style="font-family:'Inter',sans-serif;font-size:11px;color:#aaa;background:none;
+                     border:none;cursor:pointer;text-decoration:underline;padding:0;">Clear</button>
+            <div style="display:flex;gap:12px;">
+              <button type="button" onclick="closeSigPad()"
+                style="font-family:'Inter',sans-serif;font-size:12px;color:#666;background:none;
+                       border:1px solid #ddd;padding:10px 24px;cursor:pointer;">Cancel</button>
+              <button type="button" onclick="acceptSig()"
+                style="font-family:'Inter',sans-serif;font-size:12px;color:#fff;background:#0e2240;
+                       border:none;padding:10px 24px;cursor:pointer;">Accept</button>
             </div>
           </div>
         </div>
@@ -665,8 +685,7 @@ async function submitForm() {
     // Liability
     sigName: v('sigName'), initials1: v('initials1'),
     initials2: v('initials2'), initials3: v('initials3'),
-    sigFull: document.getElementById('sigFull').value ? '[signature captured]' : '',
-    sigDate: v('sigDate'),
+    sigFull: document.getElementById('sigFull').value ? '[signature captured]' : '', sigDate: v('sigDate'),
   };
 
   try {
@@ -686,108 +705,77 @@ async function submitForm() {
   }
 }
 
-// ── Signature pad ─────────────────────────────────────
+// ── Signature pad ─────────────────────────────────────────────────────────────
 function openSigPad() {
   const modal = document.getElementById('sigModal');
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
-  initCanvas();
+  setupCanvas();
 }
+
 function closeSigPad() {
   document.getElementById('sigModal').style.display = 'none';
   document.body.style.overflow = '';
 }
+
 function clearSig() {
-  const canvas = document.getElementById('sigCanvas');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const c = document.getElementById('sigCanvas');
+  c.getContext('2d').clearRect(0, 0, c.width, c.height);
 }
+
 function acceptSig() {
-  const canvas = document.getElementById('sigCanvas');
-  const dataUrl = canvas.toDataURL('image/png');
-  // Store as base64 in hidden input
+  const c = document.getElementById('sigCanvas');
+  const dataUrl = c.toDataURL('image/png');
   document.getElementById('sigFull').value = dataUrl;
-  // Draw preview
+  // Show preview
   const preview = document.getElementById('sigPreview');
-  const pCtx = preview.getContext('2d');
-  pCtx.clearRect(0, 0, preview.width, preview.height);
   const img = new Image();
-  img.onload = () => pCtx.drawImage(img, 0, 0, preview.width, preview.height);
+  img.onload = () => {
+    const ctx = preview.getContext('2d');
+    ctx.clearRect(0, 0, preview.width, preview.height);
+    ctx.drawImage(img, 0, 0, preview.width, preview.height);
+  };
   img.src = dataUrl;
   closeSigPad();
 }
 
-function initCanvas() {
+function setupCanvas() {
   const canvas = document.getElementById('sigCanvas');
-  // Scale canvas for device pixel ratio (sharp on retina/mobile)
   const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr || 468 * dpr;
-  canvas.height = 160 * dpr;
+  const w = canvas.offsetWidth || 468;
+  const h = 160;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
   const ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.strokeStyle = '#0e2240';
   ctx.lineWidth = 2;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
 
   let drawing = false;
-  let lastX = 0, lastY = 0;
 
-  function getPos(e) {
+  function pos(e) {
     const r = canvas.getBoundingClientRect();
-    if (e.touches) {
-      return { x: e.touches[0].clientX - r.left, y: e.touches[0].clientY - r.top };
-    }
-    return { x: e.clientX - r.left, y: e.clientY - r.top };
+    const src = e.touches ? e.touches[0] : e;
+    return { x: (src.clientX - r.left), y: (src.clientY - r.top) };
   }
 
-  function start(e) {
-    e.preventDefault();
-    drawing = true;
-    const p = getPos(e);
-    lastX = p.x; lastY = p.y;
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-  }
-  function draw(e) {
-    e.preventDefault();
-    if (!drawing) return;
-    const p = getPos(e);
-    ctx.lineTo(p.x, p.y);
-    ctx.stroke();
-    lastX = p.x; lastY = p.y;
-  }
-  function stop(e) { drawing = false; }
+  canvas.onmousedown = e => { drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
+  canvas.onmousemove = e => { if (!drawing) return; const p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
+  canvas.onmouseup = () => drawing = false;
+  canvas.onmouseleave = () => drawing = false;
 
-  // Remove old listeners by replacing canvas clone
-  const newCanvas = canvas.cloneNode(true);
-  canvas.parentNode.replaceChild(newCanvas, canvas);
-  const c = document.getElementById('sigCanvas');
-  const cx = c.getContext('2d');
-  cx.scale(dpr, dpr);
-  cx.strokeStyle = '#0e2240';
-  cx.lineWidth = 2;
-  cx.lineCap = 'round';
-  cx.lineJoin = 'round';
-
-  let isDrawing = false;
-
-  c.addEventListener('mousedown',  e => { isDrawing = true; const p = getPos(e); cx.beginPath(); cx.moveTo(p.x, p.y); });
-  c.addEventListener('mousemove',  e => { if (!isDrawing) return; const p = getPos(e); cx.lineTo(p.x, p.y); cx.stroke(); });
-  c.addEventListener('mouseup',    () => isDrawing = false);
-  c.addEventListener('mouseleave', () => isDrawing = false);
-  c.addEventListener('touchstart', e => { e.preventDefault(); isDrawing = true; const p = getPos(e); cx.beginPath(); cx.moveTo(p.x, p.y); }, { passive: false });
-  c.addEventListener('touchmove',  e => { e.preventDefault(); if (!isDrawing) return; const p = getPos(e); cx.lineTo(p.x, p.y); cx.stroke(); }, { passive: false });
-  c.addEventListener('touchend',   () => isDrawing = false);
+  canvas.ontouchstart = e => { e.preventDefault(); drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
+  canvas.ontouchmove  = e => { e.preventDefault(); if (!drawing) return; const p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
+  canvas.ontouchend   = () => drawing = false;
 }
 
-// Close sig modal on backdrop click
+// Close on backdrop click or Escape
 document.getElementById('sigModal').addEventListener('click', function(e) {
   if (e.target === this) closeSigPad();
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSigPad(); });
-
+</script>
 </body>
 </html>
