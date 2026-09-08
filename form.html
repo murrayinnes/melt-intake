@@ -284,7 +284,7 @@
       <div class="section-title">Client Information</div>
       <div class="g2">
         <div class="field"><label>Full Name</label><input type="text" id="name"></div>
-        <div class="field"><label>Date of First Visit</label><input type="date" id="visitDate"></div>
+        <div class="field"><label>Date of First Visit</label><input type="text" id="visitDate" placeholder="DD/MM/YYYY"></div>
       </div>
       <div class="gap"></div>
       <div class="field"><label>Address</label><input type="text" id="address"></div>
@@ -292,7 +292,7 @@
       <div class="g3">
         <div class="field"><label>Phone Number</label><input type="tel" id="phone"></div>
         <div class="field"><label>Email</label><input type="email" id="email"></div>
-        <div class="field"><label>Date of Birth</label><input type="date" id="dob"></div>
+        <div class="field"><label>Date of Birth</label><input type="text" id="dob" placeholder="DD/MM/YYYY"></div>
       </div>
       <div class="gap" style="height:10px"></div>
       <div class="g4">
@@ -371,7 +371,7 @@
       </div>
 
       <div class="field" style="margin-bottom:14px">
-        <label>Please list all medications you are currently taking</label>
+        <label>Please list all medications you are currently taking:</label>
         <textarea id="medications" class="tall"></textarea>
       </div>
       <div class="field">
@@ -385,6 +385,18 @@
     <!-- ── 3. General Questions ── -->
     <div class="section">
       <div class="section-title">General Questions</div>
+
+      <span class="sublabel" style="margin-bottom:10px">Check all that apply</span>
+      <div class="checklist c3" style="margin-bottom:20px">
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Difficulty falling/staying asleep"> Difficulty falling/staying asleep</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Depression or anxiety"> Depression or anxiety</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Wakes at night for bathroom"> Wakes at night for bathroom</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Can fall back asleep easily"> Can fall back asleep easily</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Extreme stress / pressure daily"> Extreme stress / pressure daily</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Currently smokes"> Currently smokes</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks alcohol"> Drinks alcohol</label>
+        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks coffee"> Drinks coffee</label>
+      </div>
 
       <div class="g3" style="margin-bottom:14px">
         <div class="field"><label>Average hours of sleep per night</label><input type="text" id="sleepHours"></div>
@@ -400,24 +412,12 @@
         <input type="text" id="habitFrequency">
       </div>
 
-      <span class="sublabel" style="margin-bottom:10px">Check all that apply</span>
-      <div class="checklist c3" style="margin-bottom:20px">
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Difficulty falling/staying asleep"> Difficulty falling/staying asleep</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Depression or anxiety"> Depression or anxiety</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Wakes at night for bathroom"> Wakes at night for bathroom</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Can fall back asleep easily"> Can fall back asleep easily</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Extreme stress / pressure daily"> Extreme stress / pressure daily</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Currently smokes"> Currently smokes</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks alcohol"> Drinks alcohol</label>
-        <label class="ck"><input type="checkbox" name="lifestyle" value="Drinks coffee"> Drinks coffee</label>
-      </div>
-
       <div class="field" style="margin-bottom:14px">
         <label>Have you ever been diagnosed with cancer? If yes, what type?</label>
         <textarea id="cancer"></textarea>
       </div>
       <div class="field">
-        <label>Please list any surgeries (major or minor) you have undergone</label>
+        <label>Please list any surgeries (major or minor) you have undergone:</label>
         <textarea id="surgeries" class="tall"></textarea>
       </div>
     </div>
@@ -548,10 +548,13 @@
 
       <p class="consent-block">If necessary, I allow <strong>Holly Bonnel</strong> to discuss with my health care provider or physical therapist the appropriateness of MELT training for my general health and wellness and I understand that MELT is not a replacement for medical treatment or medical diagnosis. I release <strong>Holly Bonnel</strong> from any kind of claim or injury resulting from any act or omission during MELT practice or treatment.</p>
 
-      <div class="field" style="max-width:380px; margin: 16px 0 24px">
-        <label>Full Name — I, _________________, being aware of my own health and physical condition:</label>
-        <input type="text" id="sigName">
-      </div>
+      <p class="consent-block" style="margin:16px 0 24px;">
+        I,&nbsp;<input type="text" id="sigName" placeholder="your full name"
+          title="Enter your full name"
+          style="border:none;border-bottom:1px solid #ccc;background:transparent;
+                 font-family:inherit;font-size:inherit;color:inherit;outline:none;
+                 width:220px;padding:0 2px;">&nbsp;, being aware of my own health and physical condition:
+      </p>
 
       <p class="consent-block"><strong>1)</strong> certify that I have been informed of and understand that any exercise and/or fitness activities involve a risk of injury, and that I am voluntarily participating in these activities with understanding and appreciation of the risks involved. I hereby agree to expressly assume and accept any and all risks of injury regardless of severity.</p>
       <div class="initials-row"><span>Initials</span><input type="text" id="initials1" maxlength="5"></div>
@@ -570,33 +573,29 @@
               style="border-bottom:1px solid #ccc;cursor:pointer;display:block;background:#fff;"
               onclick="openSigPad()" title="Click to sign"></canvas>
             <button type="button" onclick="openSigPad()"
-              style="font-family:'Inter',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.08em;
-                     color:#888;background:none;border:none;cursor:pointer;padding:0;text-decoration:underline;">
-              Sign here
-            </button>
+              style="font-family:'Inter',sans-serif;font-size:11px;font-weight:400;
+                     letter-spacing:0.08em;color:#888;background:none;border:none;
+                     cursor:pointer;padding:0;text-decoration:underline;">Sign here</button>
           </div>
           <input type="hidden" id="sigFull">
         </div>
         <div class="field"><label>Date</label><input type="text" id="sigDate" placeholder="DD/MM/YYYY"></div>
       </div>
 
-      <!-- ── Signature modal ── -->
-      <div id="sigModal"
-        style="display:none;position:fixed;inset:0;background:rgba(14,34,64,0.6);
-               backdrop-filter:blur(4px);z-index:9999;align-items:center;
-               justify-content:center;padding:24px;">
-        <div style="background:#fff;width:100%;max-width:540px;padding:36px 36px 28px;position:relative;">
+      <!-- Signature modal -->
+      <div id="sigModal" style="display:none;position:fixed;inset:0;background:rgba(14,34,64,0.6);
+           backdrop-filter:blur(4px);z-index:9999;align-items:center;justify-content:center;padding:24px;">
+        <div style="background:#fff;width:100%;max-width:540px;padding:36px 36px 28px;">
           <p style="font-family:'EB Garamond',serif;font-size:20px;color:#0e2240;margin-bottom:6px;">Sign here</p>
           <p style="font-size:12px;color:#aaa;margin-bottom:18px;font-family:'Inter',sans-serif;">
-            Draw your signature using your mouse, trackpad, or finger.
-          </p>
+            Draw your signature using your mouse, trackpad, or finger.</p>
           <canvas id="sigCanvas"
             style="display:block;width:100%;height:160px;border:1px solid #e0e0e0;
                    cursor:crosshair;touch-action:none;background:#fff;"></canvas>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">
             <button type="button" onclick="clearSig()"
-              style="font-family:'Inter',sans-serif;font-size:11px;color:#aaa;background:none;
-                     border:none;cursor:pointer;text-decoration:underline;padding:0;">Clear</button>
+              style="font-family:'Inter',sans-serif;font-size:11px;color:#aaa;
+                     background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;">Clear</button>
             <div style="display:flex;gap:12px;">
               <button type="button" onclick="closeSigPad()"
                 style="font-family:'Inter',sans-serif;font-size:12px;color:#666;background:none;
@@ -712,22 +711,18 @@ function openSigPad() {
   document.body.style.overflow = 'hidden';
   setupCanvas();
 }
-
 function closeSigPad() {
   document.getElementById('sigModal').style.display = 'none';
   document.body.style.overflow = '';
 }
-
 function clearSig() {
   const c = document.getElementById('sigCanvas');
   c.getContext('2d').clearRect(0, 0, c.width, c.height);
 }
-
 function acceptSig() {
   const c = document.getElementById('sigCanvas');
   const dataUrl = c.toDataURL('image/png');
   document.getElementById('sigFull').value = dataUrl;
-  // Show preview
   const preview = document.getElementById('sigPreview');
   const img = new Image();
   img.onload = () => {
@@ -738,40 +733,32 @@ function acceptSig() {
   img.src = dataUrl;
   closeSigPad();
 }
-
 function setupCanvas() {
   const canvas = document.getElementById('sigCanvas');
   const dpr = window.devicePixelRatio || 1;
   const w = canvas.offsetWidth || 468;
-  const h = 160;
   canvas.width = w * dpr;
-  canvas.height = h * dpr;
+  canvas.height = 160 * dpr;
   const ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
   ctx.strokeStyle = '#0e2240';
   ctx.lineWidth = 2;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
-
   let drawing = false;
-
   function pos(e) {
     const r = canvas.getBoundingClientRect();
     const src = e.touches ? e.touches[0] : e;
-    return { x: (src.clientX - r.left), y: (src.clientY - r.top) };
+    return { x: src.clientX - r.left, y: src.clientY - r.top };
   }
-
-  canvas.onmousedown = e => { drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
-  canvas.onmousemove = e => { if (!drawing) return; const p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
-  canvas.onmouseup = () => drawing = false;
+  canvas.onmousedown  = e => { drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
+  canvas.onmousemove  = e => { if (!drawing) return; const p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
+  canvas.onmouseup    = () => drawing = false;
   canvas.onmouseleave = () => drawing = false;
-
   canvas.ontouchstart = e => { e.preventDefault(); drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
   canvas.ontouchmove  = e => { e.preventDefault(); if (!drawing) return; const p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
   canvas.ontouchend   = () => drawing = false;
 }
-
-// Close on backdrop click or Escape
 document.getElementById('sigModal').addEventListener('click', function(e) {
   if (e.target === this) closeSigPad();
 });
